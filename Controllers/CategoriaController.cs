@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using WebApplication1.Context;
 using WebApplication1.Models;
 using WebApplication1.services;
@@ -14,11 +15,14 @@ namespace WebApplication1.Controllers
         private readonly AppDbContext? _context;
 
         private readonly IConfiguration _configuration;
+        private readonly ILogger _logger;
 
-        public CategoriaController(AppDbContext? context, IConfiguration configuration)
+        public CategoriaController(AppDbContext? context, IConfiguration configuration,
+                    ILogger<CategoriaController> logger)
         {
             _context = context;
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpPost] //categorias

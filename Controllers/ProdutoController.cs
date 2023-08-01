@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Context;
+using WebApplication1.Filters;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -18,6 +19,7 @@ namespace WebApplication1.Controllers
         
         
         [HttpGet]
+        [ServiceFilter(typeof(ApiLoggerFilter))]
         public async Task<ActionResult<IEnumerable<Produto>>> BuscarProdutos() 
         {
             var produtos = await context.Produto.AsNoTracking().ToListAsync();

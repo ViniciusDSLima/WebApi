@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using WebApplication1.Context;
+using WebApplication1.Extensions;
+using WebApplication1.Filters;
 using WebApplication1.services;
 using WebApplication1.services.implementation;
 
@@ -16,6 +18,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
         options.JsonSerializerOptions
         .ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddTransient<IMeuServico, MeuServico>();
+builder.Services.AddScoped<ApiLoggerFilter>();
 
 /*builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions
@@ -37,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandler();
 
 app.UseHttpsRedirection();
 
