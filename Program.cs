@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using WebApplication1.Context;
+using WebApplication1.services;
+using WebApplication1.services.implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(options => 
         options.JsonSerializerOptions
         .ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddTransient<IMeuServico, MeuServico>();
 
 /*builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions

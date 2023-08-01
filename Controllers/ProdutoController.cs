@@ -6,7 +6,7 @@ using WebApplication1.Models;
 namespace WebApplication1.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProdutoController : ControllerBase
     {
         private readonly AppDbContext context;
@@ -15,11 +15,12 @@ namespace WebApplication1.Controllers
         {
             this.context = context;
         }
-
+        
+        
         [HttpGet]
-        public ActionResult<IEnumerable<Produto>> BuscarProdutos(int id) 
+        public async Task<ActionResult<IEnumerable<Produto>>> BuscarProdutos() 
         {
-            var produtos = context.Produto.AsNoTracking().ToList();
+            var produtos = await context.Produto.AsNoTracking().ToListAsync();
             if(produtos is null)
             {
                 return NotFound("Produtos nao encontrados");
@@ -28,14 +29,15 @@ namespace WebApplication1.Controllers
         }
 
 
-        [HttpGet("{id:int} ", Name = "ObterProduto" )]
-        public ActionResult<Produto> BuscarProdutoPeloId(int id)
+        [HttpGet("{id:int:min(1)} ", Name = "ObterProduto" )]
+        public async Task<ActionResult<Produto>> BuscarProdutoPeloId(int id)
         {
-            var produto = context.Produto.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
+            var produto = await context.Produto.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
             if(produto is null)
             {
                 return NotFound("Produto nao encontrado");
             }
+
             return produto;
         }
 
@@ -54,7 +56,7 @@ namespace WebApplication1.Controllers
                 new { id = produto.ProdutoId }, produto);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int:min(1)}")]
         public ActionResult AtualizarProduto(int id, Produto produto)
         { 
             if(id != produto.ProdutoId) 
@@ -68,7 +70,7 @@ namespace WebApplication1.Controllers
             return Ok("produto atualizado " + produto);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int:min(1)}")]
         public ActionResult ApagarProduto(int id) 
         {
             var produto = context.Produto.FirstOrDefault(P => P.ProdutoId == id);

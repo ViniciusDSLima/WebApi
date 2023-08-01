@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a7mzfJ5QarhmJV0HBJSMV0v4FsBiaVwMoKqU56y18QWDDEcz4YwkDslUD/Nk7azMfIoMkKNmYTE2q/T7w21gRQ==",
+  "dgSpecHash": "qlixXk3j9f4gBpNjFLP4bDHgn3TVcSHkIplZCnD8axVEIA2mxEcQUvTdRF2gTXdXfv9hYzSNKZuTgvnzzpIBpA==",
   "success": true,
-  "projectFilePath": "C:\\Pessoal\\C#\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+  "projectFilePath": "C:\\Pessoal\\C#\\WebApi\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vinic\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\vinic\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.9\\microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",

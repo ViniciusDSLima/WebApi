@@ -2,51 +2,56 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Context;
 using WebApplication1.Models;
+using WebApplication1.services;
+using WebApplication1.services.implementation;
 
 namespace WebApplication1.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")] //categorias
     public class CategoriaController : ControllerBase
     {
-        private readonly AppDbContext? context;
+        private readonly AppDbContext? _context;
 
-        public CategoriaController(AppDbContext? context)
+        private readonly IConfiguration _configuration;
+
+        public CategoriaController(AppDbContext? context, IConfiguration configuration)
         {
-            this.context = context;
+            _context = context;
+            _configuration = configuration;
         }
 
-        [HttpPost]
+        [HttpPost] //categorias
         public ActionResult AdicionarCategoria(Categoria categoria)
         {
             if (categoria is null) 
             {
                 return BadRequest("Adicione uma categoria!");
             }
-            context.categorias.Add(categoria);
-            context.SaveChanges();
+            _context.categorias.Add(categoria);
+            _context.SaveChanges();
 
             return new CreatedAtRouteResult("ObterCategoria",
                 new {id = categoria.CategoriaId}, categoria);
         }
 
-        [HttpPut("{id:int}")] 
+        [HttpPut("{id:int}")] //categorias
         public ActionResult AtualizarCategoria(int id, Categoria categoria)
         {
             if(id != categoria.CategoriaId)
             {
                 return BadRequest("Categoria nao encontrada.");
             }
-            context.Entry(categoria).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(categoria).State = EntityState.Modified;
+            _context.SaveChanges();
 
             return Ok("Categoria atualizada com sucesso!" + categoria);
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> BuscarCategorias(int id)
+        [HttpGet] //categorias
+        public async Task<ActionResult<IEnumerable<Categoria>>> BuscarCategorias(int id)
         {
-            var categorias = context.categorias.AsNoTracking().ToList();
+            var categorias = await _context.categorias.AsNoTracking().ToListAsync();
 
             if(categorias == null)
             {
@@ -56,10 +61,10 @@ namespace WebApplication1.Controllers
             return categorias;
         }
 
-        [HttpGet("{id:int}", Name = "ObterCategoria")]
-        public ActionResult<Categoria> BuscarCategoriasPorId(int id)
+        [HttpGet("{id:int:min(1)}", Name = "ObterCategoria")] //categorias/id
+        public async Task<ActionResult<Categoria>> BuscarCategoriasPorId(int id)
         {
-            var categoria = context.categorias.AsNoTracking().FirstOrDefault(c => c.CategoriaId  == id);
+            var categoria = await _context.categorias.AsNoTracking().FirstOrDefaultAsync(c => c.CategoriaId  == id);
             if(categoria == null)
             {
                 return NotFound("Categoria nao encontrada");
@@ -67,10 +72,17 @@ namespace WebApplication1.Controllers
             return categoria;
         }
 
-        [HttpGet("produtos")]
-        public ActionResult<IEnumerable<Categoria>> BuscarCategoriaProduto()
+        [HttpGet("produtos")] //categorias/produtos
+        public async Task<ActionResult<IEnumerable<Categoria>>> BuscarCategoriaProduto()
         {
-            return context.categorias.AsNoTracking().Include(p => p.Produtos).ToList();
+            return await _context.categorias.AsNoTracking().Include(p => p.Produtos).ToListAsync();
+        }
+
+        [HttpGet("saudacao/{nome}")]
+        public ActionResult<string> BuscarSaudacao([FromServices] IMeuServico meuServico,
+            string nome)
+        {
+            return meuServico.saudacao(nome);
         }
     }
 }

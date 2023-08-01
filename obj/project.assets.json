@@ -1449,11 +1449,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Pessoal\\C#\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\Pessoal\\C#\\WebApi\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "C:\\Pessoal\\C#\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectPath": "C:\\Pessoal\\C#\\WebApi\\WebApplication1\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\vinic\\.nuget\\packages\\",
-      "outputPath": "C:\\Pessoal\\C#\\WebApplication1\\WebApplication1\\obj\\",
+      "outputPath": "C:\\Pessoal\\C#\\WebApi\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vinic\\AppData\\Roaming\\NuGet\\NuGet.Config",
